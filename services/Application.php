@@ -22,6 +22,12 @@ use common\components\Service;
  * @property \services\member\BankAccountService $memberBankAccount 会员银行提现账号
  * @property \services\member\CreditsLogService $memberCreditsLog 会员变动日志
  * @property \services\member\WithdrawDepositService $memberWithdrawDeposit 会员提现
+ *
+ * 题库/组卷
+ * @property \services\exam\QuestionService $examQuestion 试题
+ * @property \services\exam\TestpaperService $examTestpaper 试卷
+ * @property \services\exam\CategoryService $examCategory 知识点分类
+ * @property \services\exam\TestbankService $examTestbank 题库
  * @property \services\member\CancelService $memberCancel 会员注销
  *
  * 商户
@@ -117,6 +123,11 @@ class Application extends Service
         'memberCreditsLog' => 'services\member\CreditsLogService',
         'memberWithdrawDeposit' => 'services\member\WithdrawDepositService',
         'memberCancel' => 'services\member\CancelService',
+        /** ------ 题库/组卷 ------ **/
+        'examQuestion' => 'services\exam\QuestionService',
+        'examTestpaper' => 'services\exam\TestpaperService',
+        'examCategory' => 'services\exam\CategoryService',
+        'examTestbank' => 'services\exam\TestbankService',
         /** ------ 商户 ------ **/
         'merchant' => 'services\merchant\MerchantService',
         /** ------ 店铺 ------ **/

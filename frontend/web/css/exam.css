@@ -1,0 +1,297 @@
+/* ===== Exam Module Styles ===== */
+
+/* Sidebar */
+.exam-sidebar {
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    min-height: calc(100vh - 120px);
+    padding: 15px;
+}
+.exam-sidebar .nav-link {
+    padding: 4px 8px;
+    font-size: 14px;
+    color: #495057;
+}
+.exam-sidebar .nav-link:hover {
+    background: #e9ecef;
+    border-radius: 4px;
+}
+.exam-sidebar .nav-link.active {
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
+}
+.exam-sidebar .tree-toggle {
+    margin-bottom: 10px;
+}
+.exam-sidebar .tree-toggle .btn {
+    font-size: 13px;
+}
+
+/* Course selector */
+.course-selector {
+    margin-bottom: 15px;
+}
+.course-selector .btn-group .btn {
+    font-size: 13px;
+}
+
+/* Filter bar */
+.filter-bar {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+}
+.filter-bar .filter-label {
+    font-size: 13px;
+    color: #666;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+.filter-bar select,
+.filter-bar input {
+    font-size: 13px;
+}
+.filter-bar .filter-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+/* Question list */
+.question-list-item {
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 12px;
+    background: #fff;
+    transition: box-shadow 0.2s;
+}
+.question-list-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.question-list-item .q-header {
+    margin-bottom: 8px;
+}
+.question-list-item .q-badge {
+    font-size: 12px;
+    margin-right: 6px;
+}
+.question-list-item .q-content {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+.question-list-item .q-meta {
+    font-size: 12px;
+    color: #999;
+}
+.question-list-item .q-actions {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Question detail */
+.question-detail {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 25px;
+}
+.question-detail .q-type-badge {
+    font-size: 14px;
+}
+.question-detail .q-content-area {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 20px 0;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+.question-detail .q-options {
+    margin: 15px 0;
+}
+.question-detail .q-options .option-item {
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+}
+.question-detail .q-answer {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f0f8ff;
+    border-radius: 6px;
+}
+.question-detail .q-meta-table th {
+    width: 100px;
+    color: #666;
+    font-weight: normal;
+}
+
+/* Paper list */
+.paper-list-item {
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 12px;
+    background: #fff;
+    transition: box-shadow 0.2s;
+}
+.paper-list-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.paper-list-item .paper-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #007bff;
+}
+.paper-list-item .paper-meta {
+    font-size: 13px;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* Paper detail */
+.paper-detail-header {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.paper-question-item {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+/* Create paper */
+.create-paper-form {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 25px;
+    max-width: 600px;
+}
+
+/* Smart paper */
+.smart-paper-form {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+/* Period badges */
+.period-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #fff;
+}
+.period-2 { background: #28a745; } /* 初中 */
+.period-3 { background: #17a2b8; } /* 高中 */
+.period-4 { background: #6f42c1; } /* 综合 */
+
+/* Difficulty labels */
+.difficulty-easy { color: #28a745; }
+.difficulty-normal { color: #ffc107; }
+.difficulty-hard { color: #dc3545; }
+
+/* Tree view */
+.tree-view {
+    list-style: none;
+    padding-left: 0;
+}
+.tree-view ul {
+    list-style: none;
+    padding-left: 18px;
+}
+.tree-view li {
+    position: relative;
+    padding: 3px 0;
+}
+.tree-view li > a {
+    display: block;
+    padding: 3px 8px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 3px;
+}
+.tree-view li > a:hover {
+    background: #e9ecef;
+}
+.tree-view li > a.active {
+    background: #007bff;
+    color: #fff;
+}
+.tree-toggle-icon {
+    cursor: pointer;
+    margin-right: 4px;
+    color: #888;
+    font-size: 12px;
+}
+
+/* Page header for exam */
+.exam-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+.exam-page-header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+.exam-page-header .breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 5px 0 0;
+}
+.exam-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255,255,255,0.6);
+}
+.exam-page-header .breadcrumb-item a {
+    color: rgba(255,255,255,0.8);
+}
+
+/* Cart / selection basket */
+.question-basket {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 350px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1050;
+    display: none;
+}
+.question-basket.show {
+    display: block;
+}
+.question-basket .basket-header {
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0;
+    font-weight: 500;
+    cursor: pointer;
+}
+.question-basket .basket-body {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px 15px;
+}

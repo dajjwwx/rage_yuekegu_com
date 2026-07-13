@@ -60,14 +60,14 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-                'maxLength' => 6, // 最大显示个数
-                'minLength' => 6, // 最少显示个数
-                'padding' => 5, // 间距
-                'height' => 32, // 高度
-                'width' => 100, // 宽度
-                'offset' => 4, // 设置字符偏移量
-                'backColor' => 0xffffff, // 背景颜色
-                'foreColor' => 0x62a8ea, // 字体颜色
+                'maxLength' => 6,
+                'minLength' => 6,
+                'padding' => 5,
+                'height' => 32,
+                'width' => 100,
+                'offset' => 4,
+                'backColor' => 0xffffff,
+                'foreColor' => 0x62a8ea,
             ]
         ];
     }
@@ -81,35 +81,26 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            // 记录行为日志
             Yii::$app->services->actionLog->create('login', '自动登录', 0, [], false);
-
             return $this->goHome();
         }
 
         $model = new LoginForm();
         $model->loginCaptchaRequired();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            // 记录行为日志
             Yii::$app->services->actionLog->create('login', '账号登录', 0, [], false);
-
             return $this->goHome();
         } else {
             $model->password = '';
-
             return $this->renderPartial('login', [
                 'model' => $model,
-                'hasWechat' => Yii::$app->has('wechatService'), // 微信插件是否安装
+                'hasWechat' => Yii::$app->has('wechatService'),
             ]);
         }
     }
 
     /**
      * 微信登录
-     *
-     * @param $uuid
-     * @return mixed
-     * @throws \yii\base\InvalidConfigException
      */
     public function actionWechatLogin($ticket)
     {
@@ -134,20 +125,13 @@ class SiteController extends Controller
             return ResultHelper::json(422, '未绑定账号');
         }
 
-        // 登录
         Yii::$app->user->login($auth->member);
-        // 记录行为日志
         Yii::$app->services->actionLog->create('login', '二维码登录', 0, [], false);
-
         return ResultHelper::json(200, '登录成功');
     }
 
     /**
-     * 微信登录
-     *
-     * @param $uuid
-     * @return mixed
-     * @throws \yii\base\InvalidConfigException
+     * 微信登录二维码
      */
     public function actionGetWechatLoginQr()
     {
@@ -165,9 +149,7 @@ class SiteController extends Controller
                     ]
                 ],
             ]);
-
             $data->save();
-
             return ResultHelper::json(200, '返回登录', [
                 'ticket' => $data['ticket'],
                 'url' => $data['url'],
@@ -180,17 +162,12 @@ class SiteController extends Controller
 
     /**
      * 二维码显示
-     *
-     * @param $uuid
-     * @return mixed
-     * @throws \yii\base\InvalidConfigException
      */
     public function actionQr($url)
     {
         $qr = Yii::$app->get('qr');
         Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', $qr->getContentType());
-
         return $qr->setText($url)
             ->setErrorCorrectionLevel('quartile')
             ->setSize(200)
@@ -200,14 +177,13 @@ class SiteController extends Controller
 
     /**
      * @return \yii\web\Response
-     * @throws \yii\base\InvalidConfigException
      */
     public function actionLogout()
     {
         Yii::$app->services->actionLog->create('logout', '退出登录');
-
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
+
+
 }
