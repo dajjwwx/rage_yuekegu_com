@@ -48,6 +48,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'install' => 'install/index',
+                'exam/<c:\w+>/<a:\w+>' => 'exam/<c>/<a>',
+                'exam/<c:\w+>/<a:\w+>/<id:\d+>' => 'exam/<c>/<a>',
                 'exam/<controller:\w+>/<action:\w+>' => 'exam/<controller>/<action>',
                 'exam/<controller:\w+>/<action:\w+>/<id:\d+>' => 'exam/<controller>/<action>',
             ],
