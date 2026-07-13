@@ -109,8 +109,19 @@ class TestpaperService extends Service
             ->orderBy(['created' => SORT_DESC])
             ->all();
 
+        // 获取学科名称映射
+        $courseIds = array_unique(array_map(function($p) { return $p->course; }, $papers));
+        $courses = Course::find()->select(['id', 'name'])->where(['id' => $courseIds])->indexBy('id')->all();
+
+        $items = [];
+        foreach ($papers as $paper) {
+            $item = (object) $paper->toArray();
+            $item->course_name = isset($courses[$paper->course]) ? $courses[$paper->course]->name : '';
+            $items[] = $item;
+        }
+
         return [
-            'items' => $papers,
+            'items' => $items,
             'total' => $totalCount,
             'page' => $pagination->page + 1,
             'pageSize' => $pageSize,
