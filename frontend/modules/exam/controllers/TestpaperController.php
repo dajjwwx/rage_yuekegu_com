@@ -147,14 +147,22 @@ class TestpaperController extends Controller
             'papers' => $result,
         ]);
     }
-}
 
     /**
      * 打印试卷
      */
-    public function actionPrint($id)
+    public function actionPrint($id = null)
     {
         $this->layout = false; // 不用主题布局，纯打印样式
+
+        if ($id === null) {
+            $id = Yii::$app->request->get('id');
+        }
+
+        if (!$id) {
+            throw new \yii\web\BadRequestHttpException('缺少参数：id');
+        }
+
         $testpaper = $this->testpaperService->getDetail($id);
         if (!$testpaper) {
             throw new \yii\web\NotFoundHttpException('试卷不存在');
@@ -164,3 +172,4 @@ class TestpaperController extends Controller
             'testpaper' => $testpaper,
         ]);
     }
+}
