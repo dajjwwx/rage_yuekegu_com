@@ -249,17 +249,23 @@ class QuestionService extends Service
 
     /**
      * 获取题型列表
-     * @param string|null $courseId 按学科筛选（仅返回该学科试题使用的题型）
+     * @param string|null $courseId 按学科筛选
+     * @param string|null $period 按学段筛选
+     * @return array
      */
-    public function getTypes($courseId = null)
+    public function getTypes($courseId = null, $period = null)
     {
         $query = QuestionType::find();
-        
-        if ($courseId) {
-            // 仅返回该学科下有试题的题型
+
+        $conditions = ['status' => 1];
+        if (!empty($courseId)) $conditions['course'] = $courseId;
+        if (!empty($period)) $conditions['period'] = $period;
+
+        if (!empty($courseId) || !empty($period)) {
+            // 仅返回符合条件的试题中出现的题型
             $typeIds = Question::find()
                 ->select(['type'])
-                ->where(['course' => $courseId, 'status' => 1])
+                ->where($conditions)
                 ->distinct()
                 ->column();
             if (!empty($typeIds)) {

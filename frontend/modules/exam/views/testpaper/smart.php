@@ -145,9 +145,29 @@ $difficulties = [
 
 <?php
 $js = <<<JS
-// 学段联动学科
+/**
+ * 刷新题型下拉（学段+学科联动）
+ */
+function loadTypes(period, courseId) {
+    var \$type = $('#type-select');
+    \$type.prop('disabled', true).empty().append('<option value="">加载中...</option>');
+    $.getJSON('/exam/question/ajax-types', {period: period, course_id: courseId}, function(res) {
+        \$type.empty().append('<option value="">不限</option>');
+        if (res.success) {
+            $.each(res.data, function(i, item) {
+                \$type.append('<option value="' + item.id + '">' + item.name + '</option>');
+            });
+        }
+        \$type.prop('disabled', false);
+    });
+}
+
+// 学段联动学科 & 刷新题型
 $('#period-select').change(function() {
     var period = $(this).val();
+    var courseId = $('#course-select').val();
+    
+    // 加载学科
     var \$course = $('#course-select');
     \$course.prop('disabled', true).empty().append('<option value="">加载中...</option>');
     $.getJSON('/exam/question/ajax-courses', {period: period}, function(res) {
@@ -158,30 +178,25 @@ $('#period-select').change(function() {
             });
         }
         \$course.prop('disabled', false);
+        
+        // 恢复之前选中的学科（如果在新列表中存在）
+        if (courseId) \$course.val(courseId);
     });
-    // 清空题型
-    $('#type-select').empty().append('<option value="">不限</option>');
+    
+    // 刷新题型（学段联动了，题型也得重刷）
+    loadTypes(period, '');
 });
 
 // 学科联动题型
 $('#course-select').change(function() {
     var courseId = $(this).val();
-    var \$type = $('#type-select');
-    \$type.prop('disabled', true).empty().append('<option value="">加载中...</option>');
+    var period = $('#period-select').val();
+    
     if (!courseId) {
-        \$type.empty().append('<option value="">不限</option>');
-        \$type.prop('disabled', false);
+        $('#type-select').empty().append('<option value="">不限</option>');
         return;
     }
-    $.getJSON('/exam/question/ajax-types', {course_id: courseId}, function(res) {
-        \$type.empty().append('<option value="">不限</option>');
-        if (res.success) {
-            $.each(res.data, function(i, item) {
-                \$type.append('<option value="' + item.id + '">' + item.name + '</option>');
-            });
-        }
-        \$type.prop('disabled', false);
-    });
+    loadTypes(period, courseId);
 });
 JS;
 $this->registerJs($js);

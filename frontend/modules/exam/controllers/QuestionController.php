@@ -130,13 +130,14 @@ class QuestionController extends Controller
     }
 
     /**
-     * AJAX: 根据学科获取题型列表
+     * AJAX: 根据学科+学段获取题型列表
      */
     public function actionAjaxTypes()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $courseId = Yii::$app->request->get('course_id');
-        $types = $this->questionService->getTypes($courseId);
+        $period = Yii::$app->request->get('period');
+        $types = $this->questionService->getTypes($courseId, $period);
         return ['success' => true, 'data' => $types];
     }
 }
