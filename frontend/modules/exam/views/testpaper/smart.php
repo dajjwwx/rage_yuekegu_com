@@ -52,7 +52,7 @@ $difficulties = [
         <div class="form-row">
             <div class="form-group">
                 <label>学段</label>
-                <select name="period" class="form-control">
+                <select name="period" id="period-select" class="form-control">
                     <?php foreach ($periods as $val => $label): ?>
                         <option value="<?= $val ?>"><?= $label ?></option>
                     <?php endforeach; ?>
@@ -60,7 +60,7 @@ $difficulties = [
             </div>
             <div class="form-group">
                 <label>学科 <span class="text-danger">*</span></label>
-                <select name="course" class="form-control" required>
+                <select name="course" id="course-select" class="form-control" required>
                     <option value="">请选择</option>
                     <?php foreach ($courses as $c): ?>
                         <option value="<?= $c['id'] ?>"><?= Html::encode($c['name']) ?></option>
@@ -80,7 +80,7 @@ $difficulties = [
         <div class="form-row">
             <div class="form-group">
                 <label>题型</label>
-                <select name="type" class="form-control">
+                <select name="type" id="type-select" class="form-control">
                     <option value="">不限</option>
                     <?php foreach ($types as $t): ?>
                         <option value="<?= $t['id'] ?>"><?= Html::encode($t['name']) ?></option>
@@ -142,3 +142,47 @@ $difficulties = [
         </div>
     <?php endif; ?>
 </div>
+
+<?php
+$js = <<<JS
+// 学段联动学科
+$('#period-select').change(function() {
+    var period = $(this).val();
+    var \$course = $('#course-select');
+    \$course.prop('disabled', true).empty().append('<option value="">加载中...</option>');
+    $.getJSON('/exam/question/ajax-courses', {period: period}, function(res) {
+        \$course.empty().append('<option value="">请选择</option>');
+        if (res.success) {
+            $.each(res.data, function(i, item) {
+                \$course.append('<option value="' + item.id + '">' + item.name + '</option>');
+            });
+        }
+        \$course.prop('disabled', false);
+    });
+    // 清空题型
+    $('#type-select').empty().append('<option value="">不限</option>');
+});
+
+// 学科联动题型
+$('#course-select').change(function() {
+    var courseId = $(this).val();
+    var \$type = $('#type-select');
+    \$type.prop('disabled', true).empty().append('<option value="">加载中...</option>');
+    if (!courseId) {
+        \$type.empty().append('<option value="">不限</option>');
+        \$type.prop('disabled', false);
+        return;
+    }
+    $.getJSON('/exam/question/ajax-types', {course_id: courseId}, function(res) {
+        \$type.empty().append('<option value="">不限</option>');
+        if (res.success) {
+            $.each(res.data, function(i, item) {
+                \$type.append('<option value="' + item.id + '">' + item.name + '</option>');
+            });
+        }
+        \$type.prop('disabled', false);
+    });
+});
+JS;
+$this->registerJs($js);
+?>

@@ -117,4 +117,26 @@ class QuestionController extends Controller
             'question' => $detail,
         ]);
     }
+
+    /**
+     * AJAX: 根据学段获取学科列表
+     */
+    public function actionAjaxCourses()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $period = Yii::$app->request->get('period');
+        $courses = $this->questionService->getCourses($period);
+        return ['success' => true, 'data' => $courses];
+    }
+
+    /**
+     * AJAX: 根据学科获取题型列表
+     */
+    public function actionAjaxTypes()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $courseId = Yii::$app->request->get('course_id');
+        $types = $this->questionService->getTypes($courseId);
+        return ['success' => true, 'data' => $types];
+    }
 }

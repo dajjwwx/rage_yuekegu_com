@@ -249,10 +249,27 @@ class QuestionService extends Service
 
     /**
      * 获取题型列表
+     * @param string|null $courseId 按学科筛选（仅返回该学科试题使用的题型）
      */
-    public function getTypes()
+    public function getTypes($courseId = null)
     {
-        return QuestionType::find()->asArray()->all();
+        $query = QuestionType::find();
+        
+        if ($courseId) {
+            // 仅返回该学科下有试题的题型
+            $typeIds = Question::find()
+                ->select(['type'])
+                ->where(['course' => $courseId, 'status' => 1])
+                ->distinct()
+                ->column();
+            if (!empty($typeIds)) {
+                $query->where(['id' => $typeIds]);
+            } else {
+                return [];
+            }
+        }
+        
+        return $query->asArray()->all();
     }
 
     /**
