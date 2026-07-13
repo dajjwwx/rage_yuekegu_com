@@ -3,6 +3,17 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Rage Exam - 在线考试系统';
+
+// 统计查询
+$db = Yii::$app->db_yuekegu;
+$questionCount = (int) $db->createCommand("SELECT COUNT(*) FROM sq_question")->queryScalar();
+$testpaperCount = (int) $db->createCommand("SELECT COUNT(*) FROM sq_testpaper")->queryScalar();
+$courseCount    = (int) $db->createCommand("SELECT COUNT(*) FROM sq_course")->queryScalar();
+$subjectCount   = (int) $db->createCommand("SELECT COUNT(*) FROM ss_subject")->queryScalar();
+$typeCount      = (int) $db->createCommand("SELECT COUNT(*) FROM sq_question_type")->queryScalar();
+
+// 格式化大数
+$questionCountFmt = number_format($questionCount);
 ?>
 <div class="site-index">
 
@@ -10,6 +21,44 @@ $this->title = 'Rage Exam - 在线考试系统';
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4">Rage Exam</h1>
         <p class="lead">智能在线考试与组卷系统</p>
+    </div>
+
+    <!-- --- 资源统计卡片 --- -->
+    <div class="stats-section mb-5">
+        <div class="row stats-row">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-label">题库总数</div>
+                    <div class="stat-value"><?= $questionCountFmt ?></div>
+                    <div class="stat-desc">已录入试题</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-label">试卷总数</div>
+                    <div class="stat-value"><?= number_format($testpaperCount) ?></div>
+                    <div class="stat-desc">已创建试卷</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-label">学科数</div>
+                    <div class="stat-value"><?= $courseCount ?></div>
+                    <div class="stat-desc">覆盖课程</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-label">题型数</div>
+                    <div class="stat-value"><?= $typeCount ?></div>
+                    <div class="stat-desc">支持题型</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Exam Module Entry -->
@@ -92,3 +141,78 @@ $this->title = 'Rage Exam - 在线考试系统';
 
     </div>
 </div>
+
+<?php
+// 注册统计卡片样式
+$css = <<<CSS
+/* ===== 统计卡片样式 ===== */
+.stats-section .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+/* 每个卡片不同颜色 */
+.col-lg-3:nth-child(1) .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.col-lg-3:nth-child(2) .stat-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+.col-lg-3:nth-child(3) .stat-card {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.col-lg-3:nth-child(4) .stat-card {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+.stat-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+.stat-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.stat-desc {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+CSS;
+$this->registerCss($css);
+?>
