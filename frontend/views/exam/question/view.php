@@ -25,35 +25,33 @@ $diffPercent = isset($question['rate']) ? number_format($question['rate'] * 100,
 ?>
 
 <div class="exam-page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>📝 试题详情</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><?= Html::a('首页', ['/site/index']) ?></li>
-                        <li class="breadcrumb-item"><?= Html::a('试题浏览', ['index']) ?></li>
-                        <li class="breadcrumb-item active">试题 #<?= $question['id'] ?></li>
-                    </ol>
-                </nav>
-            </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1><i class="fas fa-file-alt"></i> 试题详情</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><?= Html::a('首页', ['/site/index']) ?></li>
+                    <li class="breadcrumb-item"><?= Html::a('试题浏览', ['index']) ?></li>
+                    <li class="breadcrumb-item active">#<?= $question['id'] ?></li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <?= Html::a('<i class="fas fa-arrow-left"></i> 返回列表', ['index'], ['class' => 'btn exam-btn exam-btn-outline']) ?>
         </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-top:20px; max-width:900px;">
     <div class="question-detail">
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-start mb-3">
             <div>
-                <h4>
+                <h4 style="margin:0">
                     试题 #<?= $question['id'] ?>
-                    <span class="badge badge-primary q-type-badge ml-2"><?= Html::encode($typeName) ?></span>
-                    <span class="badge badge-info ml-1"><?= Html::encode($courseName) ?></span>
+                    <span class="exam-badge exam-badge-primary ml-2"><?= Html::encode($typeName) ?></span>
+                    <span class="exam-badge exam-badge-light ml-1"><?= Html::encode($courseName) ?></span>
                 </h4>
-            </div>
-            <div>
-                <?= Html::a('← 返回列表', ['index'], ['class' => 'btn btn-sm btn-outline-secondary']) ?>
             </div>
         </div>
 
@@ -62,15 +60,15 @@ $diffPercent = isset($question['rate']) ? number_format($question['rate'] * 100,
             <?= nl2br(Html::encode($question['content'] ?? '')) ?>
         </div>
 
-        <!-- Options (for objective questions) -->
+        <!-- Options -->
         <?php if (!empty($question['options'])): ?>
             <div class="q-options">
-                <h6>选项：</h6>
-                <?php foreach ($question['options'] as $opt): ?>
+                <h6 style="font-weight:600;color:var(--exam-text-secondary);margin-bottom:10px"><i class="fas fa-list"></i> 选项</h6>
+                <?php foreach ($question['options'] as $i => $opt): ?>
                     <div class="option-item">
-                        <strong><?= Html::encode($opt['text'] ?? '') ?></strong>
+                        <strong><?= Html::encode($opt['text'] ?? chr(65 + $i)) ?>.</strong>
                         <?php if (!empty($opt['content'])): ?>
-                            : <?= Html::encode($opt['content']) ?>
+                            <?= Html::encode($opt['content']) ?>
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
@@ -85,20 +83,24 @@ $diffPercent = isset($question['rate']) ? number_format($question['rate'] * 100,
                 $answerAnalysis = is_object($answer) ? ($answer->analysis ?? '') : ($answer['analysis'] ?? '');
             ?>
             <div class="q-answer">
-                <h6>答案：</h6>
-                <div><?= nl2br(Html::encode($answerContent)) ?></div>
+                <h6><i class="fas fa-check-circle"></i> 参考答案</h6>
+                <div style="font-size:15px"><?= nl2br(Html::encode($answerContent)) ?></div>
                 <?php if (!empty($answerAnalysis)): ?>
-                    <div class="mt-2">
-                        <h6>解析：</h6>
-                        <div><?= nl2br(Html::encode($answerAnalysis)) ?></div>
+                    <div class="mt-3">
+                        <h6 style="color:var(--exam-text-secondary)"><i class="fas fa-lightbulb"></i> 解析</h6>
+                        <div style="font-size:14px;color:var(--exam-text-secondary)">
+                            <?= nl2br(Html::encode($answerAnalysis)) ?>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
 
-        <!-- Meta info -->
+        <!-- Meta -->
         <div class="mt-4">
-            <h6>试题信息</h6>
+            <h6 style="font-weight:600;color:var(--exam-text-secondary);margin-bottom:10px">
+                <i class="fas fa-info-circle"></i> 试题信息
+            </h6>
             <table class="table table-sm table-bordered q-meta-table">
                 <tr>
                     <th>题型</th>
@@ -108,8 +110,8 @@ $diffPercent = isset($question['rate']) ? number_format($question['rate'] * 100,
                 </tr>
                 <tr>
                     <th>难度</th>
-                    <td class="<?= $diffClass ?>"><?= $diffText ?> (错误率 <?= $diffPercent ?>)</td>
-                    <th>发布日</th>
+                    <td class="<?= $diffClass ?>"><?= $diffText ?>（错误率 <?= $diffPercent ?>）</td>
+                    <th>发布日期</th>
                     <td><?= !empty($question['pubdate']) ? date('Y-m-d', $question['pubdate']) : '未知' ?></td>
                 </tr>
                 <tr>
@@ -121,10 +123,10 @@ $diffPercent = isset($question['rate']) ? number_format($question['rate'] * 100,
                     <td colspan="3">
                         <?php if (!empty($question['categories'])): ?>
                             <?php foreach ($question['categories'] as $cat): ?>
-                                <span class="badge badge-light"><?= Html::encode($cat['name']) ?></span>
+                                <span class="exam-badge exam-badge-light mr-1"><?= Html::encode($cat['name']) ?></span>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            未分类
+                            <span class="text-muted">未分类</span>
                         <?php endif; ?>
                     </td>
                 </tr>
