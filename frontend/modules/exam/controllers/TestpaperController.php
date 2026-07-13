@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers\exam;
+namespace frontend\modules\exam\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -148,3 +148,19 @@ class TestpaperController extends Controller
         ]);
     }
 }
+
+    /**
+     * 打印试卷
+     */
+    public function actionPrint($id)
+    {
+        $this->layout = false; // 不用主题布局，纯打印样式
+        $testpaper = $this->testpaperService->getDetail($id);
+        if (!$testpaper) {
+            throw new \yii\web\NotFoundHttpException('试卷不存在');
+        }
+
+        return $this->render('print', [
+            'testpaper' => $testpaper,
+        ]);
+    }

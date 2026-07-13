@@ -17,6 +17,10 @@ return [
         'open' => [
             'class' => 'frontend\modules\open\Module',
         ],
+        /** ------ 题库/组卷模块 ------ **/
+        'exam' => [
+            'class' => 'frontend\modules\exam\Module',
+        ],
     ],
     'components' => [
         'request' => [

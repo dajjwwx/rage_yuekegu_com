@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers\exam;
+namespace frontend\modules\exam\controllers;
 
 use Yii;
 use yii\web\Controller;
