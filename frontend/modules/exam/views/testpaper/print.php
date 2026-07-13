@@ -10,7 +10,7 @@ $courseName = $testpaper['course_name'] ?? '';
 $questions = $testpaper['questions'] ?? [];
 $totalScore = $testpaper['total_score'] ?? 0;
 
-$periods = ['2' => '初中', '3' => '高中', '4' => '综合'];
+$periods = ['2' => '小学', '3' => '初中', '4' => '高中'];
 $period = $testpaper['period'] ?? '';
 
 ?>

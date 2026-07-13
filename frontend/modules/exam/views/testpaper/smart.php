@@ -16,9 +16,9 @@ $this->registerCssFile('@web/css/exam.css', ['depends' => 'frontend\assets\AppAs
 
 $periods = [
     '' => '不限',
-    '2' => '初中',
-    '3' => '高中',
-    '4' => '综合',
+    '2' => '小学',
+    '3' => '初中',
+    '4' => '高中',
 ];
 $difficulties = [
     '' => '不限',

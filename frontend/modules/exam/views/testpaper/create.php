@@ -45,9 +45,9 @@ $this->registerCssFile('@web/css/exam.css', ['depends' => 'frontend\assets\AppAs
                 <label>学段</label>
                 <?= Html::dropDownList('period', '', [
                     '' => '请选择',
-                    '2' => '初中',
-                    '3' => '高中',
-                    '4' => '综合',
+                    '2' => '小学',
+                    '3' => '初中',
+                    '4' => '高中',
                 ], ['class' => 'form-control']) ?>
             </div>
             <div class="form-group">

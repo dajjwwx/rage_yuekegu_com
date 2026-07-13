@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile('@web/css/exam.css', ['depends' => 'frontend\assets\AppAsset']);
 
 $periods = [
-    '2' => '初中',
-    '3' => '高中',
-    '4' => '综合',
+    '2' => '小学',
+    '3' => '初中',
+    '4' => '高中',
 ];
 
 $title = $testpaper['title'] ?? '未命名试卷';
